@@ -1,0 +1,14 @@
+C:\Users\abeer\source\repos\Assessments\Midterm\midterm-abeer\midterm-abeer\obj\Debug\netcoreapp3.1\midterm-abeer.csproj.AssemblyReference.cache
+C:\Users\abeer\source\repos\Assessments\Midterm\midterm-abeer\midterm-abeer\obj\Debug\netcoreapp3.1\midterm-abeer.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\abeer\source\repos\Assessments\Midterm\midterm-abeer\midterm-abeer\obj\Debug\netcoreapp3.1\midterm-abeer.AssemblyInfoInputs.cache
+C:\Users\abeer\source\repos\Assessments\Midterm\midterm-abeer\midterm-abeer\obj\Debug\netcoreapp3.1\midterm-abeer.AssemblyInfo.cs
+C:\Users\abeer\source\repos\Assessments\Midterm\midterm-abeer\midterm-abeer\obj\Debug\netcoreapp3.1\midterm-abeer.csproj.CoreCompileInputs.cache
+C:\Users\abeer\source\repos\Assessments\Midterm\midterm-abeer\midterm-abeer\bin\Debug\netcoreapp3.1\midterm-abeer.exe
+C:\Users\abeer\source\repos\Assessments\Midterm\midterm-abeer\midterm-abeer\bin\Debug\netcoreapp3.1\midterm-abeer.deps.json
+C:\Users\abeer\source\repos\Assessments\Midterm\midterm-abeer\midterm-abeer\bin\Debug\netcoreapp3.1\midterm-abeer.runtimeconfig.json
+C:\Users\abeer\source\repos\Assessments\Midterm\midterm-abeer\midterm-abeer\bin\Debug\netcoreapp3.1\midterm-abeer.runtimeconfig.dev.json
+C:\Users\abeer\source\repos\Assessments\Midterm\midterm-abeer\midterm-abeer\bin\Debug\netcoreapp3.1\midterm-abeer.dll
+C:\Users\abeer\source\repos\Assessments\Midterm\midterm-abeer\midterm-abeer\bin\Debug\netcoreapp3.1\midterm-abeer.pdb
+C:\Users\abeer\source\repos\Assessments\Midterm\midterm-abeer\midterm-abeer\obj\Debug\netcoreapp3.1\midterm-abeer.dll
+C:\Users\abeer\source\repos\Assessments\Midterm\midterm-abeer\midterm-abeer\obj\Debug\netcoreapp3.1\midterm-abeer.pdb
+C:\Users\abeer\source\repos\Assessments\Midterm\midterm-abeer\midterm-abeer\obj\Debug\netcoreapp3.1\midterm-abeer.genruntimeconfig.cache

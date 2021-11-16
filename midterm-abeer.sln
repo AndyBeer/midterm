@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31702.278
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "midterm-abeer", "midterm-abeer\midterm-abeer.csproj", "{839ECB33-2423-4B8A-836B-36381992F075}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestMockbuster", "TestMockbuster\TestMockbuster.csproj", "{76A26FB6-F6AF-4BD7-8A06-8E9F95F6CC3B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{839ECB33-2423-4B8A-836B-36381992F075}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{839ECB33-2423-4B8A-836B-36381992F075}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{839ECB33-2423-4B8A-836B-36381992F075}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{839ECB33-2423-4B8A-836B-36381992F075}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76A26FB6-F6AF-4BD7-8A06-8E9F95F6CC3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76A26FB6-F6AF-4BD7-8A06-8E9F95F6CC3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76A26FB6-F6AF-4BD7-8A06-8E9F95F6CC3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76A26FB6-F6AF-4BD7-8A06-8E9F95F6CC3B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EE511C2D-1E6F-469F-90B8-3025492B9E57}
+	EndGlobalSection
+EndGlobal
