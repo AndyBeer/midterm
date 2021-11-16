@@ -9,7 +9,7 @@ namespace midterm_abeer
         {
             //will need a new instance of movie repo to access the list of movies - couldnt figure out the arrangement to allow for class.list
             //I guess the static method GetMoviesList() basically does the same thing
-            MovieRepo movieDB = new MovieRepo();
+            //MovieRepo movieDB = new MovieRepo();
 
             Console.WriteLine("Welcome to MockBuster!\n");
 

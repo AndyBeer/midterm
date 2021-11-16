@@ -16,30 +16,29 @@ namespace TestMockbuster
             //Assert
             Admin a = new Admin();
             Movie youveGotMail = new Movie("You've Got Mail", "Meg Ryan", Genre.Romance, "Norah Ephron");
-            MovieRepo repo = new MovieRepo(); //fills the list with the pre-existing movies
+            //MovieRepo repo = new MovieRepo(); //fills the list with the pre-existing movies
 
             a.AddMovieToList(youveGotMail);
             Assert.Contains(youveGotMail, MovieRepo.Movies); //takes in an object, verifies it exists in the collection
         }
         [Fact]
-        public void TestAddMovieToListWithDupe()
+        public void TestAddMovieToListWithDupe()    //Something breaks down when all tests are ran - I think it is due to them all referencing the same list
+                                                    //Running it individually gets a pass.
         {
             Admin a = new Admin();
             Movie predator = new Movie("Predator", "Arnold Schwarzenegger", Genre.Action, "John McTeirnan");
-            MovieRepo repo = new MovieRepo();
 
             a.AddMovieToList(predator);
-            int expectedNumOnList = 6;  //MovieRepo.Movies from the start only has 6 movies
-                                        //- if this add method allows a dupe, then actual will be +1.
+             //MovieRepo.Movies from the start only has 6 movies
+             //- if this add method allows a dupe, then actual will be +1.
             int actualNumOnList = MovieRepo.GetMoviesList().Count;
 
-            Assert.Equal(expectedNumOnList, actualNumOnList);
+            Assert.Equal(6, actualNumOnList);
         }
         [Fact]
-        public void TestUpdateMovieTitle_ActuallyUpdates() //there is so much user interaction here that it cannot be tested as-is
+        public void TestUpdateMovieTitle_ActuallyUpdates() 
         {
             Admin a = new Admin();
-            MovieRepo repo = new MovieRepo();
 
             Movie actual = a.GetMovieByTitle("predator");
             a.UpdateExistingMovie(actual, "1", "Totally Not The Predator Anymore");
@@ -49,10 +48,10 @@ namespace TestMockbuster
             Assert.Equal(expected, actual.Title);
         }
         [Fact]
-        public void TestUpdateMovie_MatchesExistingTitle()
+        public void TestUpdateMovie_MatchesExistingTitle()//Something breaks down when all tests are ran - I think it is due to them all referencing the same list
+                                                          //Running it individually gets a pass.
         {
             Admin a = new Admin();
-            MovieRepo repo = new MovieRepo();
 
             Movie actual = a.GetMovieByTitle("predator");
             a.UpdateExistingMovie(actual, "1", "PReDAToR"); //same string .ToLower, so shouldnt change.
@@ -62,10 +61,10 @@ namespace TestMockbuster
             Assert.Equal(expected, actual.Title);//should fail if formatting is off, since we are not calling any .ToLower here
         }
         [Fact]
-        public void TestUpdateMovie_MatchesExistingTitle_ShouldFail()
+        public void TestUpdateMovie_MatchesExistingTitle_ShouldFail()//Something breaks down when all tests are ran - I think it is due to them all referencing the same list
+                                                                     //Running it individually gets a pass.
         {
             Admin a = new Admin();
-            MovieRepo repo = new MovieRepo();
 
             Movie actual = a.GetMovieByTitle("predator");
             a.UpdateExistingMovie(actual, "1", "PReDAToR"); //same string.ToLower, so shouldnt change.
@@ -78,7 +77,6 @@ namespace TestMockbuster
         public void TestUpdateMovieActor_ActuallyUpdates() //there is so much user interaction here that it cannot be tested as-is
         {
             Admin a = new Admin();
-            MovieRepo repo = new MovieRepo();
 
             Movie actual = a.GetMovieByTitle("casablanca");
             a.UpdateExistingMovie(actual, "2", "Keanu Reeves");
@@ -100,7 +98,6 @@ namespace TestMockbuster
         public void TestUpdateMovieActor_NumbersOrUnderLengthOrAlreadyExists(string movieTitle,string newActor, string expected) 
         {
             Admin a = new Admin();
-            MovieRepo repo = new MovieRepo();
 
             Movie actual = a.GetMovieByTitle(movieTitle);
             a.UpdateExistingMovie(actual, "2", newActor);
@@ -111,7 +108,6 @@ namespace TestMockbuster
         public void TestRemoveMovieFromList_ActuallyRemoves()
         {
             Admin a = new Admin();
-            MovieRepo repo = new MovieRepo();
 
             Movie actual = a.GetMovieByTitle("the departed");
             a.RemoveMovieFromList(actual);
@@ -119,11 +115,10 @@ namespace TestMockbuster
             Assert.DoesNotContain(actual, MovieRepo.Movies);
         }
         [Fact]
-        public void TestRemoveMovieFromList_DoesntExist() //no way to test using the GetMovieByTitle method, so I will have to create a new movie that isnt on the list
+        public void TestRemoveMovieFromList_DoesntExist()   //no way to test using the GetMovieByTitle method, so I will have to create a new movie that isnt on the list
+                                                            
         {
             Admin a = new Admin();
-            MovieRepo repo = new MovieRepo();
-
             Movie actual = new Movie ("Toy Story II", "Tim Allen", Genre.Horror, "someone");
             a.RemoveMovieFromList(actual);
 

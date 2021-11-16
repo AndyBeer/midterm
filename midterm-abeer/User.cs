@@ -31,8 +31,7 @@ namespace midterm_abeer
             return catList;
         }
         public Movie GetMovieByTitle(string searchTitle)    //NOTE - method is different, since titles will be unique in this app.
-                                                                //How do I indicate the search didnt return anything?  I dont think the else block is super helpful
-                                                                //And now we are creating an empty object unnecessarily if we dont find anything.
+
         {
             Movie searchMovie = new Movie();
             for (int i = 0; i < MovieRepo.Movies.Count; i++)
@@ -56,7 +55,6 @@ namespace midterm_abeer
             List<Movie> actorList = new List<Movie>();
             for (int i = 0; i < MovieRepo.Movies.Count; i++)
             {
-
                 if (MovieRepo.Movies[i].MainActor.ToLower().Contains(searchActor.ToLower().Trim()))
                 {
                     actorList.Add(MovieRepo.Movies[i]);
@@ -179,7 +177,15 @@ namespace midterm_abeer
                     }
                 case "3":
                     {
-                        PrintLists(GetMovieListByActor(GetInput("Search by Main Actor: ")));
+                        List<Movie> actorList = (GetMovieListByActor(GetInput("Search by Main Actor")));
+                        if (actorList.Count > 0)
+                        {
+                            PrintLists(actorList);
+                        }
+                        else
+                        {
+                            Console.WriteLine("I'm sorry, no movies contain that actor.\n");
+                        }
                         break;
                     }
                 case "4":
