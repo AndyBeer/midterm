@@ -6,7 +6,7 @@ namespace midterm_abeer
 {
     public class MovieRepo
     {
-        public static List<Movie> Movies { get; set; } = new List<Movie>()
+        private static List<Movie> Movies { get; set; } = new List<Movie>()
         {
         new Movie("Predator", "Arnold Schwarzenegger", Genre.Action, "John McTiernan"),
         new Movie("The Departed", "Leo DiCaprio", Genre.Drama, "Martin Scorsese"),
@@ -16,15 +16,10 @@ namespace midterm_abeer
         new Movie("Toy Story", "Tom Hanks", Genre.Animated, "John Lassiter")
         };
 
-        public static List<Movie> GetMoviesList()
+        public static List<Movie> GetMoviesList
         {
-            List<Movie> listGetter = Movies;
-            return listGetter;
-        }
-        public static void AddToMoviesList(Movie m)
-        { 
-
-        
+            get { return Movies; }
+            set { Movies = value; }
         }
     }
 }

@@ -20,25 +20,27 @@ namespace midterm_abeer
         public List<Movie> GetMovieListByGenre(Genre searchCategory)  //NOTE - this needs to validate if the list is empty - can be handled in Program if catList.Count = 0.
         {
             List<Movie> catList = new List<Movie>();
-            for (int i = 0; i < MovieRepo.Movies.Count; i++)
+            for (int i = 0; i < MovieRepo.GetMoviesList.Count; i++)
             {
 
-                if (MovieRepo.Movies[i].Category == searchCategory)
+                if (MovieRepo.GetMoviesList[i].Category == searchCategory)
                 {
-                    catList.Add(MovieRepo.Movies[i]);
+                    catList.Add(MovieRepo.GetMoviesList[i]);
                 }
             }
             return catList;
         }
         public Movie GetMovieByTitle(string searchTitle)    //NOTE - method is different, since titles will be unique in this app.
-
+                                                            //I'll make another method that returns a list of movies by the same title,
+                                                            //but probably won't use it in the program.  If I used something like a movie ID# as a property,
+                                                            //then returning a list of movie titles would make more functional sense.
         {
             Movie searchMovie = new Movie();
-            for (int i = 0; i < MovieRepo.Movies.Count; i++)
+            for (int i = 0; i < MovieRepo.GetMoviesList.Count; i++)
             {
-                if (MovieRepo.Movies[i].Title.ToLower().Contains(searchTitle.ToLower().Trim()))
+                if (MovieRepo.GetMoviesList[i].Title.ToLower().Contains(searchTitle.ToLower().Trim()))
                 {
-                    searchMovie = MovieRepo.Movies[i];
+                    searchMovie = MovieRepo.GetMoviesList[i];
                     break;
                 }
             }
@@ -47,17 +49,29 @@ namespace midterm_abeer
             else
             {
                 Console.WriteLine("No movie found.  Please confirm your spelling and try again.");
-                return GetMovieByTitle(GetInput("Movie Title:  "));
+                return GetMovieByTitle(GetInput("Movie Title:  ")); //This line loops this menu - different process than the actor search
             }
+        }
+        public List<Movie> GetMovieListByTitle(string searchTitle)  //still needs unit test
+        {
+            List<Movie> titleList = new List<Movie>();
+            for (int i = 0; i < MovieRepo.GetMoviesList.Count; i++)
+            {
+                if (MovieRepo.GetMoviesList[i].Title.ToLower().Contains(searchTitle.ToLower().Trim()))
+                {
+                    titleList.Add(MovieRepo.GetMoviesList[i]);
+                }
+            }
+            return titleList;
         }
         public List<Movie> GetMovieListByActor(string searchActor)    //NOTE - this needs to validate if the list is empty - can be handled in Program if actorList.Count = 0.
         {
             List<Movie> actorList = new List<Movie>();
-            for (int i = 0; i < MovieRepo.Movies.Count; i++)
+            for (int i = 0; i < MovieRepo.GetMoviesList.Count; i++)
             {
-                if (MovieRepo.Movies[i].MainActor.ToLower().Contains(searchActor.ToLower().Trim()))
+                if (MovieRepo.GetMoviesList[i].MainActor.ToLower().Contains(searchActor.ToLower().Trim()))
                 {
-                    actorList.Add(MovieRepo.Movies[i]);
+                    actorList.Add(MovieRepo.GetMoviesList[i]);
                 }
             }
             return actorList;
@@ -65,62 +79,67 @@ namespace midterm_abeer
         public List<Movie> GetMovieListByDirector(string searchDir)    //NOTE - this needs to validate if the list is empty - can be handled in Program if dirList.Count = 0.
         {
             List<Movie> dirList = new List<Movie>();
-            for (int i = 0; i < MovieRepo.Movies.Count; i++)
+            for (int i = 0; i < MovieRepo.GetMoviesList.Count; i++)
             {
 
-                if (MovieRepo.Movies[i].Director.ToLower().Contains(searchDir.ToLower().Trim()))
+                if (MovieRepo.GetMoviesList[i].Director.ToLower().Contains(searchDir.ToLower().Trim()))
                 {
-                    dirList.Add(MovieRepo.Movies[i]);
+                    dirList.Add(MovieRepo.GetMoviesList[i]);
                 }
             }
             return dirList;
         }
         public Genre UserSelectedGenre(string userGenreSelection)
         {
-            Genre searchGenre = Genre.Action;  //I think it needs an arbitrary default value to make the compiler happy.
+            Genre searchGenre = Genre.Action;   //I think it needs an arbitrary default value to make the compiler happy.
+                                 //JK, this is breaking your code
 
-            switch (userGenreSelection.Trim())
+            bool validGenre = false;
+            while (!validGenre)
             {
-                case "1":
-                    {
-                        searchGenre = Genre.Action;
-                        return searchGenre;
-                    }
-                case "2":
-                    {
-                        searchGenre = Genre.Animated;
-                        return searchGenre;
-                    }
+                switch (userGenreSelection.Trim())
+                {
+                    case "1":
+                        {
+                            searchGenre = Genre.Action;
+                            return searchGenre;
+                        }
+                    case "2":
+                        {
+                            searchGenre = Genre.Animated;
+                            return searchGenre;
+                        }
 
-                case "3":
-                    {
-                        searchGenre = Genre.Comedy;
-                        return searchGenre;
-                    }
-                case "4":
-                    {
-                        searchGenre = Genre.Drama;
-                        return searchGenre;
-                    }
-                case "5":
-                    {
-                        searchGenre = Genre.Horror;
-                        return searchGenre;
-                    }
-                case "6":
-                    {
-                        searchGenre = Genre.Romance;
-                        return searchGenre;
-                    }
-                default:
-                    {
-                        userGenreSelection = GetInput("Invalid Selection.  Please select a number of the genre you wish to search:  ");
-                        break;
-                    }
+                    case "3":
+                        {
+                            searchGenre = Genre.Comedy;
+                            return searchGenre;
+                        }
+                    case "4":
+                        {
+                            searchGenre = Genre.Drama;
+                            return searchGenre;
+                        }
+                    case "5":
+                        {
+                            searchGenre = Genre.Horror;
+                            return searchGenre;
+                        }
+                    case "6":
+                        {
+                            searchGenre = Genre.Romance;
+                            return searchGenre;
+                        }
+                    default:
+                        {
+                            userGenreSelection = GetInput("Invalid Selection.  Please select a number of the genre above:  ");
+                            continue;
+                        }
+                }
             }
             return searchGenre;
         }
-
+            
         public static bool ContinueLoop(string question)
         {
             string response = GetInput(question);
@@ -153,21 +172,22 @@ namespace midterm_abeer
         }
         public void UserMenu()
         {
-            string mainMenuSelection = GetInput($"What would you like to do?\n" +
+            string mainMenuSelection = GetInput($"\nWhat would you like to do?\n" +
                     $"[1] Display all movies\n" +
                     $"[2] Search by Title\n" +
                     $"[3] Search by Main Actor\n" +
                     $"[4] Filter by Genre\n" +
                     $"[5] Search by Director\n" +
                     $"[6] Admin Menu\n" +
-                    $"[7] Exit\n");
+                    $"[7] Exit\n" +
+                    "[ ]: ");
 
             switch (mainMenuSelection)
             {
                 case "1":
                     {
                         Console.WriteLine("All movies:");
-                        PrintLists(MovieRepo.Movies); // I can call the static method in MovieRepo, but it isnt necessary - i can access the list directly
+                        PrintLists(MovieRepo.GetMoviesList); 
                         break;
                     }
                 case "2":
@@ -177,9 +197,11 @@ namespace midterm_abeer
                     }
                 case "3":
                     {
-                        List<Movie> actorList = (GetMovieListByActor(GetInput("Search by Main Actor")));
+                        string actorSearch = GetInput("Search by Main Actor: ");
+                        List<Movie> actorList = GetMovieListByActor(actorSearch);
                         if (actorList.Count > 0)
                         {
+                            Console.WriteLine($"Movies starring {actorSearch}:\n");
                             PrintLists(actorList);
                         }
                         else
@@ -197,7 +219,9 @@ namespace midterm_abeer
                             Console.WriteLine($"{i + 1}: " + g);
                             i++;
                         }
-                        PrintLists(GetMovieListByGenre(UserSelectedGenre(GetInput("Please select search genre [number]: "))));
+                        Genre searchGenre = UserSelectedGenre(GetInput("Please select search genre [number]: "));
+                        Console.WriteLine($"\nList of {searchGenre.ToString()} Movies:\n");
+                        PrintLists(GetMovieListByGenre(searchGenre));
                         break;
                     }
                 case "5":
@@ -216,8 +240,16 @@ namespace midterm_abeer
                 case "6":
                     {
                         Admin admin = new Admin();
-                        string userPass = User.GetInput("RESTRICTED\n\nPlease input password to continue:  ");
-                        if (userPass == admin.Password)
+                        string userPass;
+                        if (!IsAdmin)
+                        {
+                            userPass = GetInput("RESTRICTED\n\nPlease input password to continue:  ");
+                            if (userPass == Admin.GetAdminPassword)
+                            {
+                                IsAdmin = true;
+                            }
+                        }
+                        if (IsAdmin)
                         {
                             admin.AdminMenu(); 
                         }

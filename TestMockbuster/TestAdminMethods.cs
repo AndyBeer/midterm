@@ -19,7 +19,7 @@ namespace TestMockbuster
             //MovieRepo repo = new MovieRepo(); //fills the list with the pre-existing movies
 
             a.AddMovieToList(youveGotMail);
-            Assert.Contains(youveGotMail, MovieRepo.Movies); //takes in an object, verifies it exists in the collection
+            Assert.Contains(youveGotMail, MovieRepo.GetMoviesList); //takes in an object, verifies it exists in the collection
         }
         [Fact]
         public void TestAddMovieToListWithDupe()    //Something breaks down when all tests are ran - I think it is due to them all referencing the same list
@@ -31,7 +31,7 @@ namespace TestMockbuster
             a.AddMovieToList(predator);
              //MovieRepo.Movies from the start only has 6 movies
              //- if this add method allows a dupe, then actual will be +1.
-            int actualNumOnList = MovieRepo.GetMoviesList().Count;
+            int actualNumOnList = MovieRepo.GetMoviesList.Count;
 
             Assert.Equal(6, actualNumOnList);
         }
@@ -112,7 +112,7 @@ namespace TestMockbuster
             Movie actual = a.GetMovieByTitle("the departed");
             a.RemoveMovieFromList(actual);
 
-            Assert.DoesNotContain(actual, MovieRepo.Movies);
+            Assert.DoesNotContain(actual, MovieRepo.GetMoviesList);
         }
         [Fact]
         public void TestRemoveMovieFromList_DoesntExist()   //no way to test using the GetMovieByTitle method, so I will have to create a new movie that isnt on the list
@@ -122,7 +122,7 @@ namespace TestMockbuster
             Movie actual = new Movie ("Toy Story II", "Tim Allen", Genre.Horror, "someone");
             a.RemoveMovieFromList(actual);
 
-            Assert.Equal(6, MovieRepo.Movies.Count);
+            Assert.Equal(6, MovieRepo.GetMoviesList.Count);
         }
     }
 }

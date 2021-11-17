@@ -13,7 +13,12 @@ namespace midterm_abeer
         }
         public Admin() : base()
             {}
-        public string Password = "Password123";
+        private static string Password = "Password123";
+        public static string GetAdminPassword
+        {
+            get { return Password; }
+            set { Password = value; }
+        }
 
         //I probably would have designed this to take a string, so we could verify on entry of title in Program
         //- we can still do this by creating a mostly empty movie obj w just a title, then run this method at that time.
@@ -21,13 +26,13 @@ namespace midterm_abeer
         public void AddMovieToList(Movie m) 
         {
             bool newMovie = true;
-            for (int i = 0; i < MovieRepo.Movies.Count; i++)
+            for (int i = 0; i < MovieRepo.GetMoviesList.Count; i++)
             {
-                if (MovieRepo.Movies[i].Title.ToLower() == m.Title.ToLower())
+                if (MovieRepo.GetMoviesList[i].Title.ToLower() == m.Title.ToLower())
                 {
                     newMovie = false;
                     Console.WriteLine("That movie already exists - here are the current movies available:\n");
-                    PrintLists(MovieRepo.Movies);
+                    PrintLists(MovieRepo.GetMoviesList);
                     break;
                 }
                 else
@@ -37,7 +42,7 @@ namespace midterm_abeer
             }
             if (newMovie)
             {
-                MovieRepo.Movies.Add(m);
+                MovieRepo.GetMoviesList.Add(m);
                 Console.WriteLine($"{m.Title} does not currently exist - let's add it!");
             }
         }
@@ -56,7 +61,7 @@ namespace midterm_abeer
                         if (newTitle.ToLower().Trim() != m.Title.ToLower())
                         {
                             m.Title = newTitle;
-                            Console.WriteLine($"Title updated: {m.Title}\n");
+                            Console.WriteLine($"Title updated to: {m.Title}\n");
                         }
                         else
                         {
@@ -279,7 +284,7 @@ namespace midterm_abeer
         {
             bool movieExists = true;
             Movie removeMe = new Movie();
-            foreach (Movie currentMovie in MovieRepo.Movies)
+            foreach (Movie currentMovie in MovieRepo.GetMoviesList)
             {
                 if (m == currentMovie) 
                 {
@@ -294,14 +299,14 @@ namespace midterm_abeer
             }
             else if (!movieExists)
             {
-                MovieRepo.Movies.Remove(removeMe);
+                MovieRepo.GetMoviesList.Remove(removeMe);
             }
             
         }
 
         public void AdminMenu()
         {
-            string adminSelect = GetInput("~~Admin Menu~~\nPlease select one of the following menu items:\n" +
+            string adminSelect = GetInput("\n~~Admin Menu~~\nPlease select one of the following menu items:\n" +
                 "[1] Add Movie to List\n[2] Edit Existing Movie Info\n[3] Re-movie Da Movie\n[4] Exit to Main Menu\n\nSelection:  ");
             switch (adminSelect)
             {
@@ -322,7 +327,7 @@ namespace midterm_abeer
                             Movie movieToEdit = new Movie();
                             Console.WriteLine("Full Movie List:");
                             int i = 1;
-                            foreach (Movie m in MovieRepo.Movies)
+                            foreach (Movie m in MovieRepo.GetMoviesList)
                             {
                                 Console.WriteLine($"[{i}] " + m);
                                 i++;
@@ -338,7 +343,7 @@ namespace midterm_abeer
                             }
                             try
                             {
-                                movieToEdit = MovieRepo.Movies[movieNum];
+                                movieToEdit = MovieRepo.GetMoviesList[movieNum];
                             }
                             catch (Exception e)
                             {
@@ -370,7 +375,7 @@ namespace midterm_abeer
                             Movie movieToRemove = new Movie();
                             Console.WriteLine("Full Movie List:");
                             int i = 1;
-                            foreach (Movie m in MovieRepo.Movies)
+                            foreach (Movie m in MovieRepo.GetMoviesList)
                             {
                                 Console.WriteLine($"[{i}] " + m);
                                 i++;
@@ -386,7 +391,7 @@ namespace midterm_abeer
                             }
                             try
                             {
-                                movieToRemove = MovieRepo.Movies[movieNum-1];
+                                movieToRemove = MovieRepo.GetMoviesList[movieNum-1];
                             }
                             catch (Exception e)
                             {
@@ -414,7 +419,7 @@ namespace midterm_abeer
                     }
                 default:
                     {
-                        Console.WriteLine("Invalid response.\n\n");
+                        Console.WriteLine("Invalid response.\n");
                         AdminMenu();
                         break;
                     }

@@ -15,7 +15,7 @@ namespace midterm_abeer
 
             User user = new User();
             user.UserName = User.GetInput("Please enter your User Name below.\n\nUsername: ");
-            Console.WriteLine($"Welcome {user.UserName}");
+            Console.WriteLine($"Welcome {user.UserName}!\n");
             bool keepGoing = true;
             while (keepGoing)
             {
