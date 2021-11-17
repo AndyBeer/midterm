@@ -15,7 +15,7 @@ namespace TestMockbuster
             //Act
             //Assert
             Admin a = new Admin();
-            Movie youveGotMail = new Movie("You've Got Mail", "Meg Ryan", Genre.Romance, "Norah Ephron");
+            Movie youveGotMail = new Movie("You've Got Mail", "Meg Ryan", Genre.Romance, "Nora Ephron");
             //MovieRepo repo = new MovieRepo(); //fills the list with the pre-existing movies
 
             a.AddMovieToList(youveGotMail);

@@ -79,7 +79,7 @@ namespace midterm_abeer
         {
             Genre searchGenre = Genre.Action;  //I think it needs an arbitrary default value to make the compiler happy.
 
-            switch (userGenreSelection)
+            switch (userGenreSelection.Trim())
             {
                 case "1":
                     {
@@ -202,7 +202,15 @@ namespace midterm_abeer
                     }
                 case "5":
                     {
-                        PrintLists(GetMovieListByDirector(GetInput("Search by director:  ")));
+                        List <Movie> dirList = (GetMovieListByDirector(GetInput("Search by director:  ")));
+                        if (dirList.Count > 0)
+                        {
+                            PrintLists(dirList);
+                        }
+                        else
+                        {
+                            Console.WriteLine("I'm sorry, no movies directed by that person.\n");
+                        }
                         break;
                     }
                 case "6":

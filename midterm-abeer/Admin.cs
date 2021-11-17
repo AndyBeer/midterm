@@ -13,12 +13,12 @@ namespace midterm_abeer
         }
         public Admin() : base()
             {}
-        public string Password { get; set; } = "Password123";
+        public string Password = "Password123";
 
-        public void AddMovieToList(Movie m) //I probably would have designed this to take a string, so we could verify on entry of title in Program
-                                            //- we can still do this by creating a mostly empty movie obj w just a title, then run this method at that time.
-                                            //also, void methods are going to kill me w unit testing 
+        //I probably would have designed this to take a string, so we could verify on entry of title in Program
+        //- we can still do this by creating a mostly empty movie obj w just a title, then run this method at that time.
 
+        public void AddMovieToList(Movie m) 
         {
             bool newMovie = true;
             for (int i = 0; i < MovieRepo.Movies.Count; i++)
