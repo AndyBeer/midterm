@@ -6,12 +6,12 @@ namespace midterm_abeer
 {
     public enum Genre
     {
-        Action,     //0
-        Animated,   //1
-        Comedy,     //2
-        Drama,      //3
-        Horror,     //4
-        Romance     //5
+        Action = 1,     
+        Animated = 2,   
+        Comedy = 3,     
+        Drama = 4,      
+        Horror = 5,     
+        Romance = 6     
     }
 }
 

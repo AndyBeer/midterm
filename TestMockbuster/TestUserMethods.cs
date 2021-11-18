@@ -7,6 +7,9 @@ using midterm_abeer;
 namespace TestMockbuster
 {
     public class TestUserMethods
+        //When running ALL Unit Tests, lots of them fail.  I believe this is due to the lists being updated between different tests running.
+        //When run separately, they all pass.
+
     {
         [Theory]    //Using the index of the list living in MovieRepo.Movies
                     //Testing the search movie by title conversion to still return a valid movie in different string format.

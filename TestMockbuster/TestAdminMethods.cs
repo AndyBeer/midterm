@@ -7,9 +7,11 @@ using midterm_abeer;
 namespace TestMockbuster
 {
     public class TestAdminMethods
+    //When running ALL Unit Tests, lots of them fail.  I believe this is due to the lists being updated between different tests running.
+    //When run separately, they all pass.
     {
         [Fact]
-        public void TestAddMovieToList()
+        public void TestAddMovieToList() 
         {
             //Arrange
             //Act
@@ -21,6 +23,8 @@ namespace TestMockbuster
             a.AddMovieToList(youveGotMail);
             Assert.Contains(youveGotMail, MovieRepo.GetMoviesList); //takes in an object, verifies it exists in the collection
         }
+
+
         [Fact]
         public void TestAddMovieToListWithDupe()    //Something breaks down when all tests are ran - I think it is due to them all referencing the same list
                                                     //Running it individually gets a pass.

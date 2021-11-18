@@ -31,8 +31,6 @@ namespace midterm_abeer
                 if (MovieRepo.GetMoviesList[i].Title.ToLower() == m.Title.ToLower())
                 {
                     newMovie = false;
-                    Console.WriteLine("\nThat movie already exists - here are the current movies available:");
-                    PrintLists(MovieRepo.GetMoviesList);
                     break;
                 }
                 else
@@ -42,19 +40,22 @@ namespace midterm_abeer
             }
             if (newMovie && m.Title.Length > 3)
             {
-                Console.WriteLine($"\n{m.Title} does not currently exist - let's add it!\n");
+                Console.WriteLine($"\n{m.Title} does not currently exist - let's add it!");
                 m.MainActor = " "; //If I didnt do this, I would get null exceptions
                 m.Director = " ";  //If I didnt do this, I would get null exceptions
-                UpdateMovieActor(m);
-                UpdateMovieGenre(m);
-                UpdateMovieDir(m);
                 MovieRepo.GetMoviesList.Add(m);
-                Console.WriteLine($"\n{m.Title} successfully added.");
+                //Console.WriteLine($"\n{m.Title} successfully added.");
+
+            }
+            else if (!newMovie)
+            {
+                Console.WriteLine("\nThat movie already exists - here are the current movies available:");
                 PrintLists(MovieRepo.GetMoviesList);
             }
             else
-            { Console.WriteLine("\nThat title is invalid.  Movie not saved."); }
-            AdminMenu();
+            {
+                Console.WriteLine("\nThat title is invalid.  Movie not saved.");
+            }
         }
         public void UpdateExistingMovie(Movie m)  
         {
@@ -92,7 +93,6 @@ namespace midterm_abeer
                         break;
                     }
             }
-            AdminMenu();
         }
         public void UpdateExistingMovie(Movie m, string response, string newString) //override created for unit testing
         {
@@ -315,23 +315,15 @@ namespace midterm_abeer
                 {
                     movieExists = true;
                     Console.WriteLine(currentMovie);
-                    if (ContinueLoop($"\nRemove \"{currentMovie.Title}\"?  [y] or [n]:  ") == true)
-                    {
-                        Console.WriteLine($"\n{currentMovie.Title} has been removed from the list.");
-                        MovieRepo.GetMoviesList.Remove(currentMovie);
-                        break;
-                    }
-                    else
-                    {
-                        Console.WriteLine($"\n{currentMovie.Title} has NOT been removed.");
-                    }
+                    Console.WriteLine($"\n{currentMovie.Title} has been removed from the list.");
+                    MovieRepo.GetMoviesList.Remove(currentMovie);
+                    break;
                 } 
             }
             if (!movieExists)
             {
                 Console.WriteLine("\nThat movie is not on the list.  Please add via the \"Add Movie\" option in the Admin menu if needed.");
             }
-            AdminMenu();
         }
 
         public void AdminMenu()
@@ -345,6 +337,12 @@ namespace midterm_abeer
                         Movie addMovie = new Movie();
                         addMovie.Title = GetInput("New Movie Title:  ");
                         AddMovieToList(addMovie);
+
+                        UpdateMovieActor(addMovie);
+                        UpdateMovieGenre(addMovie);
+                        UpdateMovieDir(addMovie);
+                        Console.WriteLine($"\n{addMovie.Title} successfully added.");
+                        PrintLists(MovieRepo.GetMoviesList);
                         break;
                     }
                 case "2":
@@ -354,8 +352,7 @@ namespace midterm_abeer
                         if (searchByNum.Trim() == "1")
                         {
                             int movieNum = -1;
-                            Movie movieToEdit = new Movie();
-                            Console.WriteLine("Full Movie List:");
+                            Console.WriteLine("\nFull Movie List:");
                             List<Movie> sorted = MovieRepo.GetMoviesList.OrderBy(Movie => Movie.Title).ToList();
                             PrintLists(sorted);
                             string movieSelect = GetInput("\nMovie # to edit:  ");
@@ -365,41 +362,45 @@ namespace midterm_abeer
                             }
                             catch (Exception e)
                             {
-                                Console.WriteLine("Invalid selection.  " + e.Message);
+                                Console.WriteLine("\nInvalid selection.  \n" + e.Message+"\n\nBack to the admin menu.");
+                                break;
                             }
                             try
                             {
-                                movieToEdit = sorted[movieNum];
+                                UpdateExistingMovie(sorted[movieNum]);
                             }
                             catch (Exception e)
                             {
-                                Console.WriteLine("Invalid selection.  " + e.Message);
+                                Console.WriteLine("\nInvalid selection.  \n" + e.Message + "\n\nBack to the admin menu.");
+                                break;
                             }
-                            UpdateExistingMovie(movieToEdit);
                         }
                         else if (searchByNum.Trim() == "2")
                         {
                             Movie movieToEdit = GetMovieByTitle(GetInput("Search Title:  "));
-                            if (movieToEdit != null)
+                            if (movieToEdit.Title != null)
                             {
                                 UpdateExistingMovie(movieToEdit);
+                            }
+                            else
+                            {
+                                Console.WriteLine("\nMovie not found.");
                             }
                         }
                         else
                         {
-                            Console.WriteLine("Invalid Selection.  Please try again.");
-                            AdminMenu();
+                            Console.WriteLine("\nInvalid Selection.  Please try again.");
+                            break;
                         }
                         break;
                     }
                 case "3":
                     {
-                        string searchByNum = GetInput("[1] Select by Number from Current Movie List\n[2] Search by Movie Title\n");
+                        string searchByNum = GetInput("\n[1] Select by Number from Current Movie List\n[2] Search by Movie Title\n");
 
                         if (searchByNum.Trim() == "1")
                         {
                             int movieNum = -1;
-                            Movie movieToRemove = new Movie();
                             Console.WriteLine("\nFull Movie List:");
                             List<Movie> sorted = MovieRepo.GetMoviesList.OrderBy(Movie => Movie.Title).ToList();
                             PrintLists(sorted);
@@ -410,44 +411,57 @@ namespace midterm_abeer
                             }
                             catch (Exception e)
                             {
-                                Console.WriteLine("\nInvalid selection.  " + e.Message);
+                                Console.WriteLine("\nInvalid selection.  \n" + e.Message+"\n\nBack to the admin menu.");
+                                break;
                             }
                             try
                             {
-                                movieToRemove = sorted[movieNum];
+                                if (ContinueLoop("Are you sure you want to remove this movie? [y] or [n]:  ") == true)
+                                {
+                                    RemoveMovieFromList(sorted[movieNum]);
+                                }
+                                else 
+                                {
+                                    Console.WriteLine($"{sorted[movieNum].Title} has NOT been removed.");
+                                }
                             }
                             catch (Exception e)
                             {
-                                Console.WriteLine("\nInvalid selection.  " + e.Message);
+                                Console.WriteLine("\nInvalid selection.  \n" + e.Message + "\n\nBack to the admin menu.");
+                                break;
                             }
-                            RemoveMovieFromList(movieToRemove);
                         }
                         else if (searchByNum.Trim() == "2")
                         {
                             Movie movieToRemove = GetMovieByTitle(GetInput("\nSearch Title:  "));
-                            if (movieToRemove != null)
+                            if (movieToRemove.Title != null)
                             {
                                 RemoveMovieFromList(movieToRemove); 
+                            }
+                            else
+                            {
+                                Console.WriteLine("\nMovie not found.");
                             }
                         }
                         else
                         {
                             Console.WriteLine("\nInvalid Selection.  Please try again.");
-                            AdminMenu();
+                            break;
                         }
                         break;
                     }
                 case "4":
                     {
+                        UserMenu();
                         break;
                     }
                 default:
                     {
                         Console.WriteLine("\nInvalid response.  Please enter a number between 1 and 4 to continue.");
-                        AdminMenu();
                         break;
                     }
             }
+            AdminMenu();
         }
     }
 }

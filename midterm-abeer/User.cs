@@ -86,9 +86,7 @@ namespace midterm_abeer
         }
         public Genre UserSelectedGenre(string userGenreSelection)
         {
-            Genre searchGenre = Genre.Action;   //I think it needs an arbitrary default value to make the compiler happy.
-                                 //JK, this is breaking your code
-
+            Genre genre = Genre.Action; //default value so the compiler passes - must be a better way to do this.
             bool validGenre = false;
             while (!validGenre)
             {
@@ -96,43 +94,49 @@ namespace midterm_abeer
                 {
                     case "1":
                         {
-                            searchGenre = Genre.Action;
-                            return searchGenre;
+                            genre = (Genre)1;
+                            validGenre = true;
+                            break;
                         }
                     case "2":
                         {
-                            searchGenre = Genre.Animated;
-                            return searchGenre;
+                            genre = (Genre)2;
+                            validGenre = true;
+                            break;
                         }
 
                     case "3":
                         {
-                            searchGenre = Genre.Comedy;
-                            return searchGenre;
+                            genre = (Genre)3;
+                            validGenre = true;
+                            break;
                         }
                     case "4":
                         {
-                            searchGenre = Genre.Drama;
-                            return searchGenre;
+                            genre = (Genre)4;
+                            validGenre = true;
+                            break;
                         }
                     case "5":
                         {
-                            searchGenre = Genre.Horror;
-                            return searchGenre;
+                            genre = (Genre)5;
+                            validGenre = true;
+                            break;
                         }
                     case "6":
                         {
-                            searchGenre = Genre.Romance;
-                            return searchGenre;
+                            genre = (Genre)6;
+                            validGenre = true;
+                            break;
                         }
                     default:
                         {
-                            userGenreSelection = GetInput("Invalid Selection.  Please select a number of the genre above:  ");
+                            userGenreSelection = GetInput("\nInvalid Selection.  Please select a number of the genre above:  ");
                             continue;
                         }
                 }
             }
-            return searchGenre;
+            return genre;
         }
             
         public static bool ContinueLoop(string question)
@@ -148,7 +152,7 @@ namespace midterm_abeer
             }
             else
             {
-                Console.WriteLine("Invalid input.  Please input \"y\" or \"n\".\n");
+                Console.WriteLine("\nInvalid input.  Please input \"y\" or \"n\".");
                 return ContinueLoop(question);
             }
         }
