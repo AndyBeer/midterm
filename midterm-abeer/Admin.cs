@@ -291,7 +291,7 @@ namespace midterm_abeer
         }
         public void UpdateMovieDir(Movie m)
         {
-            string newDir = GetInput($"\n{m.Title}'s Director: {m.Director}");
+            string newDir = GetInput($"\nPlease enter new Director:  ");
             if (newDir.Any(char.IsDigit) || newDir.Length < 3)
             {
                 Console.WriteLine("That name does not meet requirements - no changes have been made.");
@@ -453,7 +453,6 @@ namespace midterm_abeer
                     }
                 case "4":
                     {
-                        UserMenu();
                         break;
                     }
                 default:
@@ -462,7 +461,6 @@ namespace midterm_abeer
                         break;
                     }
             }
-            AdminMenu();
         }
     }
 }
