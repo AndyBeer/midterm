@@ -261,7 +261,6 @@ namespace midterm_abeer
                         }
                     case "6":
                         {
-                            Admin admin = new Admin();
                             string userPass;
                             if (!IsAdmin)
                             {
@@ -273,6 +272,8 @@ namespace midterm_abeer
                             }
                             if (IsAdmin)
                             {
+
+                                Admin admin = new Admin();
                                 admin.AdminMenu();
                             }
                             else

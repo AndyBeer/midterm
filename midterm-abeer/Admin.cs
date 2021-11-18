@@ -12,7 +12,9 @@ namespace midterm_abeer
             this.IsAdmin = true;
         }
         public Admin() : base()
-            {}
+        {
+            this.IsAdmin = true;
+        }
         private static string Password = "Password123";
         public static string GetAdminPassword
         {
@@ -44,17 +46,17 @@ namespace midterm_abeer
                 m.MainActor = " "; //If I didnt do this, I would get null exceptions
                 m.Director = " ";  //If I didnt do this, I would get null exceptions
                 MovieRepo.GetMoviesList.Add(m);
-                //Console.WriteLine($"\n{m.Title} successfully added.");
-
             }
             else if (!newMovie)
             {
                 Console.WriteLine("\nThat movie already exists - here are the current movies available:");
                 PrintLists(MovieRepo.GetMoviesList);
+                AdminMenu();
             }
             else
             {
                 Console.WriteLine("\nThat title is invalid.  Movie not saved.");
+                AdminMenu();
             }
         }
         public void UpdateExistingMovie(Movie m)  
@@ -337,7 +339,6 @@ namespace midterm_abeer
                         Movie addMovie = new Movie();
                         addMovie.Title = GetInput("New Movie Title:  ");
                         AddMovieToList(addMovie);
-
                         UpdateMovieActor(addMovie);
                         UpdateMovieGenre(addMovie);
                         UpdateMovieDir(addMovie);
