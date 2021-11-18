@@ -22,7 +22,12 @@ namespace midterm_abeer
         { }
         public override string ToString()
         {
-            return $"~{Title}\nMain Actor: {MainActor}\nDirector: {Director}\nGenre: {Category}\n";
+            string formatTitle = "~";
+            for (int i = 0; i <= Title.Length; i++)
+            {
+                formatTitle += "~";
+            }
+            return $"{formatTitle}\n {Title}\n{formatTitle}\nMain Actor: {MainActor}\nDirector: {Director}\nGenre: {Category}\n";
         }
     }
 }

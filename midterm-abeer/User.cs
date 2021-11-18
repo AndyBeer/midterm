@@ -36,23 +36,18 @@ namespace midterm_abeer
                                                             //then returning a list of movie titles would make more functional sense.
         {
             Movie searchMovie = new Movie();
-            for (int i = 0; i < MovieRepo.GetMoviesList.Count; i++)
-            {
-                if (MovieRepo.GetMoviesList[i].Title.ToLower().Contains(searchTitle.ToLower().Trim()))
+
+                for (int i = 0; i < MovieRepo.GetMoviesList.Count; i++)
                 {
-                    searchMovie = MovieRepo.GetMoviesList[i];
-                    break;
+                    if (MovieRepo.GetMoviesList[i].Title.ToLower().Contains(searchTitle.ToLower().Trim()))
+                    {
+                        searchMovie = MovieRepo.GetMoviesList[i];
+                        break;
+                    }
                 }
-            }
-            if (searchMovie.Title != null)
-                return searchMovie;
-            else
-            {
-                Console.WriteLine("No movie found.  Please confirm your spelling and try again.");
-                return GetMovieByTitle(GetInput("Movie Title:  ")); //This line loops this menu - different process than the actor search
-            }
+            return searchMovie;
         }
-        public List<Movie> GetMovieListByTitle(string searchTitle)  //still needs unit test
+        public List<Movie> GetMovieListByTitle(string searchTitle) 
         {
             List<Movie> titleList = new List<Movie>();
             for (int i = 0; i < MovieRepo.GetMoviesList.Count; i++)
@@ -165,111 +160,136 @@ namespace midterm_abeer
         }
         public void PrintLists(List<Movie> movies)
         {
+            Console.WriteLine("\n|---------------------------------------------------------------------------------------------------------------|");
+            Console.WriteLine("|------------Title------------|----------Main Actor----------|--------Genre--------|----------Director----------|");
+            Console.WriteLine("|---------------------------------------------------------------------------------------------------------------|");
+            int i = 1;
             foreach (Movie m in movies.OrderBy(Movie => Movie.Title).ToList())
             {
-                Console.WriteLine(m);
+                Console.WriteLine(string.Format("|{0, -28} | {1, -28} | {2,-19} | {3,-27}|", ($"[{i}] "+ m.Title), m.MainActor, m.Category, m.Director));
+                i++;
             }
+            Console.WriteLine("|---------------------------------------------------------------------------------------------------------------|\n");
         }
         public void UserMenu()
         {
-            string mainMenuSelection = GetInput($"\nWhat would you like to do?\n" +
-                    $"[1] Display all movies\n" +
-                    $"[2] Search by Title\n" +
-                    $"[3] Search by Main Actor\n" +
-                    $"[4] Filter by Genre\n" +
-                    $"[5] Search by Director\n" +
-                    $"[6] Admin Menu\n" +
-                    $"[7] Exit\n" +
-                    "[ ]: ");
+            bool continueUserMenu = true;
 
-            switch (mainMenuSelection)
+            while (continueUserMenu)
             {
-                case "1":
-                    {
-                        Console.WriteLine("All movies:");
-                        PrintLists(MovieRepo.GetMoviesList); 
-                        break;
-                    }
-                case "2":
-                    {
-                        Console.WriteLine(GetMovieByTitle(GetInput("Search by movie title: ")));
-                        break;
-                    }
-                case "3":
-                    {
-                        string actorSearch = GetInput("Search by Main Actor: ");
-                        List<Movie> actorList = GetMovieListByActor(actorSearch);
-                        if (actorList.Count > 0)
+                string mainMenuSelection = GetInput($"\n        MAIN MENU\n    =================\n" +
+                        $"[1] Display All Movies\n" +
+                        $"[2] Search by Title\n" +
+                        $"[3] Search by Main Actor\n" +
+                        $"[4] Filter by Genre\n" +
+                        $"[5] Search by Director\n" +
+                        $"[6] Admin Menu\n" +
+                        $"[7] Exit\n" +
+                        "[ ]: ");
+
+                switch (mainMenuSelection)
+                {
+                    case "1":
                         {
-                            Console.WriteLine($"Movies starring {actorSearch}:\n");
-                            PrintLists(actorList);
+                            Console.WriteLine("\nAll movies:");
+                            PrintLists(MovieRepo.GetMoviesList);
+                            continueUserMenu = ContinueLoop("Back to main menu?  [y] or [n]:  ");
+                            break;
                         }
-                        else
+                    case "2":
                         {
-                            Console.WriteLine("I'm sorry, no movies contain that actor.\n");
-                        }
-                        break;
-                    }
-                case "4":
-                    {
-                        Console.WriteLine("Genres:\n");
-                        int i = 0;
-                        foreach (Genre g in Enum.GetValues(typeof(Genre)))
-                        {
-                            Console.WriteLine($"{i + 1}: " + g);
-                            i++;
-                        }
-                        Genre searchGenre = UserSelectedGenre(GetInput("Please select search genre [number]: "));
-                        Console.WriteLine($"\nList of {searchGenre.ToString()} Movies:\n");
-                        PrintLists(GetMovieListByGenre(searchGenre));
-                        break;
-                    }
-                case "5":
-                    {
-                        List <Movie> dirList = (GetMovieListByDirector(GetInput("Search by director:  ")));
-                        if (dirList.Count > 0)
-                        {
-                            PrintLists(dirList);
-                        }
-                        else
-                        {
-                            Console.WriteLine("I'm sorry, no movies directed by that person.\n");
-                        }
-                        break;
-                    }
-                case "6":
-                    {
-                        Admin admin = new Admin();
-                        string userPass;
-                        if (!IsAdmin)
-                        {
-                            userPass = GetInput("RESTRICTED\n\nPlease input password to continue:  ");
-                            if (userPass == Admin.GetAdminPassword)
+                            Movie printMovie = GetMovieByTitle(GetInput("\nSearch by movie title: "));
+                            if (printMovie.Title != null)
                             {
-                                IsAdmin = true;
+                                Console.WriteLine("\n" + printMovie);
+                                continueUserMenu = ContinueLoop("Back to main menu?  [y] or [n]:  ");
                             }
+                            else
+                            {
+                                Console.WriteLine("\nThat title was not found.  Please try again.");
+                            }
+                            break;
                         }
-                        if (IsAdmin)
+                    case "3":
                         {
-                            admin.AdminMenu(); 
+                            string actorSearch = GetInput("\nSearch by Main Actor: ");
+                            List<Movie> actorList = GetMovieListByActor(actorSearch);
+                            if (actorList.Count > 0)
+                            {
+                                Console.WriteLine("\nActor Search Results:");
+                                PrintLists(actorList);
+                                continueUserMenu = ContinueLoop("Back to main menu?  [y] or [n]:  ");
+                            }
+                            else
+                            {
+                                Console.WriteLine("\nI'm sorry, no movies contain that actor.");
+                            }
+                            break;
                         }
-                        else
+                    case "4":
                         {
-                            Console.WriteLine("That password does not match - back to main menu.");
+                            Console.WriteLine("\nGenres:\n");
+                            int i = 0;
+                            foreach (Genre g in Enum.GetValues(typeof(Genre)))
+                            {
+                                Console.WriteLine($"{i + 1}: " + g);
+                                i++;
+                            }
+                            Genre searchGenre = UserSelectedGenre(GetInput("\nPlease select search genre [number]: "));
+                            Console.WriteLine($"\nList of {searchGenre} Movies:");
+                            PrintLists(GetMovieListByGenre(searchGenre));
+                            continueUserMenu = ContinueLoop("Back to main menu?  [y] or [n]:  ");
+                            break;
                         }
-                        break;
-                    }
-                case "7":
-                    {
-                        Console.WriteLine("Exiting...");
-                        break;
-                    }
-                default:
-                    {
-                        Console.WriteLine("Invalid Selection---\n");
-                        UserMenu();
-                        break;
-                    }
+                    case "5":
+                        {
+                            List<Movie> dirList = (GetMovieListByDirector(GetInput("\nSearch by director:  ")));
+                            if (dirList.Count > 0)
+                            {
+                                PrintLists(dirList);
+                                continueUserMenu = ContinueLoop("Back to main menu?  [y] or [n]:  ");
+                            }
+                            else
+                            {
+                                Console.WriteLine("\nI'm sorry, no movies were found with that director.  Please try again.");
+                            }
+                            break;
+                        }
+                    case "6":
+                        {
+                            Admin admin = new Admin();
+                            string userPass;
+                            if (!IsAdmin)
+                            {
+                                userPass = GetInput("\nRESTRICTED\n\nPlease input password to continue:  ");
+                                if (userPass == Admin.GetAdminPassword)
+                                {
+                                    IsAdmin = true;
+                                }
+                            }
+                            if (IsAdmin)
+                            {
+                                admin.AdminMenu();
+                            }
+                            else
+                            {
+                                Console.WriteLine("\nThat password does not match - back to main menu.");
+                            }
+                            break;
+                        }
+                    case "7":
+                        {
+                            Console.WriteLine("\nExiting...");
+                            continueUserMenu = false;
+                            break;
+                        }
+                    default:
+                        {
+                            Console.WriteLine("\nInvalid Selection---");
+                            UserMenu();
+                            break;
+                        }
+                }
             }
         }
     }

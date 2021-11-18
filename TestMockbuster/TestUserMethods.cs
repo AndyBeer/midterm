@@ -100,5 +100,22 @@ namespace TestMockbuster
 
             Assert.Equal(expected, actualActor);
         }
+        [Theory]
+        [InlineData("   PREDATOR", "Predator")]
+        [InlineData("the departed   ", "The Departed")]
+        [InlineData("  CaSaBlAnCa  ", "Casablanca")]
+        [InlineData("Billy Madison", "Billy Madison")]
+        [InlineData("The Shining      ", "The Shining")]
+        [InlineData("toy storY   ", "Toy Story")]
+        public void TestGetMovieListByTitle(string titleInput, string expected)
+        {
+            User u = new User();
+
+            List<Movie> titleList = u.GetMovieListByTitle(titleInput);
+            string actualTitle = titleList[0].Title;    //Hard-coded the index, since we do not have a large list of movies - should return exactly 1 movie because of this.
+
+            Assert.Equal(expected, actualTitle);
+        }
+
     }
 }
