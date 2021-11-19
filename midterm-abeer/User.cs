@@ -17,7 +17,7 @@ namespace midterm_abeer
         }
         public User()
         { }
-        public List<Movie> GetMovieListByGenre(Genre searchCategory)  //NOTE - this needs to validate if the list is empty - can be handled in Program if catList.Count = 0.
+        public List<Movie> GetMovieListByGenre(Genre searchCategory)  
         {
             List<Movie> catList = new List<Movie>();
             for (int i = 0; i < MovieRepo.GetMoviesList.Count; i++)
@@ -59,7 +59,7 @@ namespace midterm_abeer
             }
             return titleList;
         }
-        public List<Movie> GetMovieListByActor(string searchActor)    //NOTE - this needs to validate if the list is empty - can be handled in Program if actorList.Count = 0.
+        public List<Movie> GetMovieListByActor(string searchActor)    
         {
             List<Movie> actorList = new List<Movie>();
             for (int i = 0; i < MovieRepo.GetMoviesList.Count; i++)
@@ -71,7 +71,7 @@ namespace midterm_abeer
             }
             return actorList;
         }
-        public List<Movie> GetMovieListByDirector(string searchDir)    //NOTE - this needs to validate if the list is empty - can be handled in Program if dirList.Count = 0.
+        public List<Movie> GetMovieListByDirector(string searchDir)   
         {
             List<Movie> dirList = new List<Movie>();
             for (int i = 0; i < MovieRepo.GetMoviesList.Count; i++)
@@ -240,9 +240,18 @@ namespace midterm_abeer
                                 i++;
                             }
                             Genre searchGenre = UserSelectedGenre(GetInput("\nPlease select search genre [number]: "));
-                            Console.WriteLine($"\nList of {searchGenre} Movies:");
-                            PrintLists(GetMovieListByGenre(searchGenre));
-                            continueUserMenu = ContinueLoop("Back to main menu?  [y] or [n]:  ");
+                            
+                            List<Movie> genreList = GetMovieListByGenre(searchGenre);
+                            if (genreList.Count > 0)
+                            {
+                                Console.WriteLine($"\nList of {searchGenre} Movies:");
+                                PrintLists(GetMovieListByGenre(searchGenre));
+                            }
+                            else
+                            {
+                                Console.WriteLine("\nSorry, no movies of that genre were found.");
+                            }
+                            continueUserMenu = ContinueLoop("\nBack to main menu?  [y] or [n]:  ");
                             break;
                         }
                     case "5":

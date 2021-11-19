@@ -22,9 +22,6 @@ namespace midterm_abeer
             set { Password = value; }
         }
 
-        //I probably would have designed this to take a string, so we could verify on entry of title in Program
-        //- we can still do this by creating a mostly empty movie obj w just a title, then run this method at that time.
-
         public void AddMovieToList(Movie m) 
         {
             bool newMovie = true;
@@ -51,12 +48,12 @@ namespace midterm_abeer
             {
                 Console.WriteLine("\nThat movie already exists - here are the current movies available:");
                 PrintLists(MovieRepo.GetMoviesList);
-                AdminMenu();
+                //AdminMenu();
             }
             else
             {
                 Console.WriteLine("\nThat title is invalid.  Movie not saved.");
-                AdminMenu();
+                //AdminMenu();
             }
         }
         public void UpdateExistingMovie(Movie m)  
@@ -267,13 +264,11 @@ namespace midterm_abeer
                 m.Category = Genre.Comedy;
                 Console.WriteLine($"\n{m.Title} - genre successfully updated to {m.Category}.");
             }
-
             else if (userGenre.ToLower().Trim() == "4" || userGenre.ToLower().Trim() == "drama")
             {
                 m.Category = Genre.Drama;
                 Console.WriteLine($"\n{m.Title} - genre successfully updated to {m.Category}.");
             }
-
             else if (userGenre.ToLower().Trim() == "5" || userGenre.ToLower().Trim() == "horror")
             {
                 m.Category = Genre.Horror;
@@ -285,7 +280,6 @@ namespace midterm_abeer
                 m.Category = Genre.Romance;
                 Console.WriteLine($"\n{m.Title} - genre successfully updated to {m.Category}.");
             }
-
             else
                 Console.WriteLine($"Invalid selection. {m.Title} will remain a {m.Category.ToString().ToLower()}.");
         }
@@ -305,7 +299,6 @@ namespace midterm_abeer
             {
                 Console.WriteLine($"This person is already listed as the director for {m.Title} - No changes have been made.");
             }
-            
         }
         public void RemoveMovieFromList(Movie m) 
         {
@@ -339,11 +332,14 @@ namespace midterm_abeer
                         Movie addMovie = new Movie();
                         addMovie.Title = GetInput("New Movie Title:  ");
                         AddMovieToList(addMovie);
-                        UpdateMovieActor(addMovie);
-                        UpdateMovieGenre(addMovie);
-                        UpdateMovieDir(addMovie);
-                        Console.WriteLine($"\n{addMovie.Title} successfully added.");
-                        PrintLists(MovieRepo.GetMoviesList);
+                        if (MovieRepo.GetMoviesList.Contains(addMovie))
+                        {
+                            UpdateMovieActor(addMovie);
+                            UpdateMovieGenre(addMovie);
+                            UpdateMovieDir(addMovie);
+                            Console.WriteLine($"\n{addMovie.Title} successfully added.");
+                            PrintLists(MovieRepo.GetMoviesList);
+                        }
                         break;
                     }
                 case "2":
@@ -363,7 +359,7 @@ namespace midterm_abeer
                             }
                             catch (Exception e)
                             {
-                                Console.WriteLine("\nInvalid selection.  \n" + e.Message+"\n\nBack to the admin menu.");
+                                Console.WriteLine("\nInvalid selection.  \n" + e.Message+"\n\nBack to the main menu.");
                                 break;
                             }
                             try
@@ -372,7 +368,7 @@ namespace midterm_abeer
                             }
                             catch (Exception e)
                             {
-                                Console.WriteLine("\nInvalid selection.  \n" + e.Message + "\n\nBack to the admin menu.");
+                                Console.WriteLine("\nInvalid selection.  \n" + e.Message + "\n\nBack to the main menu.");
                                 break;
                             }
                         }
@@ -409,10 +405,15 @@ namespace midterm_abeer
                             try
                             {
                                 movieNum = int.Parse(movieSelect) - 1;
+                                if (movieNum > MovieRepo.GetMoviesList.Count)
+                                {
+                                    Console.WriteLine("\nThat is not a valid selection.\nBack to the main menu.");
+                                    break;
+                                }
                             }
                             catch (Exception e)
                             {
-                                Console.WriteLine("\nInvalid selection.  \n" + e.Message+"\n\nBack to the admin menu.");
+                                Console.WriteLine("\nInvalid selection.  \n" + e.Message+"\n\nBack to the main menu.");
                                 break;
                             }
                             try
@@ -428,7 +429,7 @@ namespace midterm_abeer
                             }
                             catch (Exception e)
                             {
-                                Console.WriteLine("\nInvalid selection.  \n" + e.Message + "\n\nBack to the admin menu.");
+                                Console.WriteLine("\nInvalid selection.  \n" + e.Message + "\n\nBack to the main menu.");
                                 break;
                             }
                         }
