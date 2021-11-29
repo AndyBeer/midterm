@@ -93,7 +93,7 @@ namespace midterm_abeer
                     }
             }
         }
-        public void UpdateExistingMovie(Movie m, string response, string newString) //override created for unit testing
+        public void UpdateExistingMovie(Movie m, string response, string newString) //overload created for unit testing
         {
             switch (response)
             {

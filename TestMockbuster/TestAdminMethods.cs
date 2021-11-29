@@ -21,7 +21,9 @@ namespace TestMockbuster
             //MovieRepo repo = new MovieRepo(); //fills the list with the pre-existing movies
 
             a.AddMovieToList(youveGotMail);
-            Assert.Contains(youveGotMail, MovieRepo.GetMoviesList); //takes in an object, verifies it exists in the collection
+            List<Movie> actual = MovieRepo.GetMoviesList;
+            Assert.Contains(youveGotMail, actual); //takes in an object, verifies it exists in the collection
+
         }
 
 
